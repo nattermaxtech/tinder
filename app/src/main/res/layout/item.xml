@@ -1,33 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="250dp"
+    android:layout_width="240dp"
     android:layout_height="170dp"
     android:layout_gravity="center">
 
     <TextView android:id="@+id/helloText"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="center"
         android:textSize="40sp"
         android:textColor="@android:color/white"
         android:background="#E339"
-        android:gravity="center"
         tools:text="Hello World"/>
 
-    <View android:id="@+id/left_swipe_indicator"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:alpha="0"
-        android:layout_margin="10dp"
-        android:background="#A5F"/>
-
-    <View android:id="@+id/right_swipe_indicator"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:alpha="0"
-        android:layout_margin="20dp"
-        android:layout_gravity="end"
-        android:background="#5AF"/>
-
-</FrameLayout>
+</LinearLayout>

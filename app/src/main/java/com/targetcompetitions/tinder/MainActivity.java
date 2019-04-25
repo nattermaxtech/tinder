@@ -2,28 +2,28 @@ package com.targetcompetitions.tinder;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import java.util.ArrayList;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+import java.util.ArrayList;
 import android.widget.Toast;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private ArrayAdapter<String> adapter;
+    private SwipeFlingAdapterView flingContainer;
     private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
-    private SwipeFlingAdapterView swipeFlingAdapterView;
-    private int i;
+    private int count;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         findViewById(R.id.leftButton).setOnClickListener(this);
         findViewById(R.id.rightButton).setOnClickListener(this);
 
+        flingContainer = findViewById(R.id.swipeFlingView);
         al = new ArrayList<>();
         al.add("php");
         al.add("c");
@@ -33,70 +33,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         al.add("c++");
         al.add("css");
         al.add("javascript");
+        adapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al);
+        flingContainer.setAdapter(adapter);
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al);
-
-        swipeFlingAdapterView = findViewById(R.id.flingView);
-        swipeFlingAdapterView.setAdapter(arrayAdapter);
-        swipeFlingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener(){
+        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener(){
 
             @Override
             public void onLeftCardExit(Object dataObject){
-                Toast.makeText(MainActivity.this, "Left Card Exit", Toast.LENGTH_SHORT).show();
+                makeToast("Left");
             }
-
 
             @Override
             public void onRightCardExit(Object dataObject){
-                Toast.makeText(MainActivity.this, "Right Card Exit", Toast.LENGTH_SHORT).show();
+                makeToast(("Right"));
             }
 
             @Override
-            public void onAdapterAboutToEmpty(int itemInAdapter){
-                al.add("XML ".concat(String.valueOf(i)));
-                arrayAdapter.notifyDataSetChanged();
-                i++;
+            public void onAdapterAboutToEmpty(int itemsInAdapter){
+                al.add("XML ".concat(String.valueOf(count)));
+                adapter.notifyDataSetChanged();
+                count++;
             }
 
             @Override
             public void onScroll(float scrollProgressPercent){
-                //TODO
+
             }
 
             @Override
             public void removeFirstObjectInAdapter(){
                 al.remove(0);
-                arrayAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
-
         });
 
-        swipeFlingAdapterView.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener(){
+        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener(){
             @Override
-            public void onItemClicked(int itemPosition, Object dataObject){
-                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+            public void onItemClicked(int itemPostition, Object dataObject){
+                makeToast(((String)dataObject).concat(" clicked"));
             }
         });
 
+
+    }
+
+    private void makeToast(String str){
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 
     public void onClick(View view){
         switch(view.getId()){
             case R.id.leftButton:
-                leftButton(view);
+                onLeftButtonClick(view);
                 break;
+
             case R.id.rightButton:
-                rightButton(view);
+                onRightButtonClick(view);
                 break;
         }
     }
 
-
-    private void leftButton(View view){
-        swipeFlingAdapterView.getTopCardListener().selectLeft();
+    private void onLeftButtonClick(View view){
+        flingContainer.getTopCardListener().selectLeft();
     }
 
-    private void rightButton(View view){
-        swipeFlingAdapterView.getTopCardListener().selectRight();
+    private void onRightButtonClick(View view){
+        flingContainer.getTopCardListener().selectRight();
     }
 }
