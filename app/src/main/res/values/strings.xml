@@ -2,4 +2,11 @@
     <string name="app_name">Tinder</string>
     <string name="left">Left</string>
     <string name="right">Right</string>
+    <string name="login">Login</string>
+    <string name="registration">Registration</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="registration_failed">Registration Failed</string>
 </resources>
